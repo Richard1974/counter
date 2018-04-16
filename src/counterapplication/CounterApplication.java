@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package counterapplication;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-//import javax.swing.event.*;
+import javax.swing.event.*;
 
 class CounterApplication extends JFrame {
     Counter counter;
@@ -29,26 +24,9 @@ class CounterApplication extends JFrame {
         container.add(label);
         container.add(incrementButton);
         container.add(resetButton);
-        
-        class IncrementButtonHandler implements ActionListener {
-            public void actionPerformed(ActionEvent event){
-                counter.increment();
-                update();
-            }
-        }
-        
-        IncrementButtonHandler ibh = new IncrementButtonHandler();
-        incrementButton.addActionListener(ibh);
-        
-        class ResetButtonHandler implements ActionListener {
-            public void actionPerformed(ActionEvent event){
-                counter.reset();
-                update();
-            }
-        }
-        
-        ResetButtonHandler rbh = new ResetButtonHandler();
-        resetButton.addActionListener(rbh);
+                
+        incrementButton.addActionListener(new IncrementButtonHandler(counter, this));
+        resetButton.addActionListener(new ResetButtonHandler(counter, this));
         
         setSize(150, 450);
         setVisible(true);
