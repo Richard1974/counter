@@ -13,6 +13,9 @@ class CounterApplication extends JFrame {
     
     public CounterApplication() {
         
+        setTitle("Counter Application");
+        setSize(250, 450);
+        
         counter = new Counter();
         label = new JLabel("" + counter.getCount(),
                            SwingConstants.CENTER);
@@ -32,7 +35,53 @@ class CounterApplication extends JFrame {
         incrementButton.setToolTipText("Increment the counter");
         resetButton.setToolTipText("Set the counter back to zero");
         
-        setSize(150, 450);
+        JMenuBar menuBar = new JMenuBar();
+        this.setJMenuBar(menuBar);
+        
+        JMenu fileMenu = new JMenu("File");
+        fileMenu.setMnemonic('F');
+        
+        JMenuItem exitItem = new JMenuItem("Exit");
+        exitItem.setMnemonic('x');
+        
+        // Handler implemented as named inner class
+        class ExitItemListener implements ActionListener {
+            public void actionPerformed(ActionEvent event) {
+                System.exit(0);
+            }
+        }
+        
+        exitItem.addActionListener(new ExitItemListener());
+        fileMenu.add(exitItem);
+        
+        menuBar.add(fileMenu);
+        
+        JMenu actionMenu = new JMenu("Action");
+        actionMenu.setMnemonic('A');
+        
+        JMenuItem incrementItem = new JMenuItem("Increment");
+        incrementItem.setMnemonic('I');
+        
+        incrementItem.addActionListener(
+            // Anonymous inner class to handle exitItem event
+            new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    counter.increment();
+                    update();
+                }
+            } // end anonymous inner class
+        ); // end call to addActionListener
+        
+        actionMenu.add(incrementItem);
+        
+        JMenuItem resetItem = new JMenuItem("Reset");
+        resetItem.setMnemonic('R');
+        // Handler implemented in separate class
+        resetItem.addActionListener(new ResetItemHandler(counter, this));
+        actionMenu.add(resetItem);
+        
+        menuBar.add(actionMenu);
+        
         setVisible(true);
     }
     
