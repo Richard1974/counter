@@ -28,6 +28,10 @@ class CounterApplication extends JFrame {
         incrementButton.addActionListener(new IncrementButtonHandler(counter, this));
         resetButton.addActionListener(new ResetButtonHandler(counter, this));
         
+        label.setToolTipText("Current value of the counter");
+        incrementButton.setToolTipText("Increment the counter");
+        resetButton.setToolTipText("Set the counter back to zero");
+        
         setSize(150, 450);
         setVisible(true);
     }
